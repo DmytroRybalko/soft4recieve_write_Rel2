@@ -23,4 +23,29 @@ for column in bd_csv:
     val_list.append(int(column[6]))
     group_list.append(column[7])
     BOM_list.append(column[8])
-print BOM_list
+
+# Create data store structure
+buf_list = []
+for pos in range(len(out_list)):
+    buf_dic = {}
+    buf_dic['out'] = out_list[pos]
+    buf_dic['size'] = size_list[pos]
+    buf_dic['shift'] = shift_list[pos]
+    buf_dic['type'] = type_list[pos]
+    buf_dic['name'] = long_name[pos]
+    buf_dic['cut_name'] = cut_name[pos]
+    buf_dic['val'] = val_list[pos]
+    buf_dic['group'] = group_list[pos]
+    buf_dic['BOM'] = BOM_list[pos]
+    buf_list.append(buf_dic)
+    del buf_dic
+packets = tuple(buf_list)
+
+if __name__ == "__main__":
+    print BOM_list
+    print packets[2]
+    print packets[55]['cut_name']
+    print
+    print [packets.index(pack) for pack in packets if pack['group'] == 'IMU']
+    er = (34,'gerg','4566',45,'eggw')
+    print er.index(45)
