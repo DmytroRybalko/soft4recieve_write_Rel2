@@ -31,6 +31,18 @@ def path_valid(dir_path):
             out_dict[p] = 'Your *%s* path is invalid!' % p
     return  out_dict
 
+def get_my_path(path_dict,p_key,file_name,file_mode):
+    """
+    Function return file object which has path 'p_key' from path_dict, name
+    'file_name' and file mode like 'file_mode'.
+    """
+    try:
+        # Create valid path for file.
+        work_path = path_valid(create_path(path_dict))
+        return open(work_path[p_key] + file_name, file_mode)
+    except:
+        print 'Something wrong this your path!'
+
 
 if __name__ == "__main__":
     dic_path = {'win32':{'in':'in path for win','out':'out path for win'},
