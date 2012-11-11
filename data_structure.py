@@ -32,7 +32,7 @@ for pos in range(len(out_list)):
     buf_dic['size'] = size_list[pos]
     buf_dic['shift'] = shift_list[pos]
     buf_dic['type'] = type_list[pos]
-    buf_dic['name'] = long_name[pos]
+    buf_dic['name'] = long_name[pos].decode('cp1251')
     buf_dic['cut_name'] = cut_name[pos]
     buf_dic['val'] = val_list[pos]
     buf_dic['group'] = group_list[pos]
@@ -42,10 +42,11 @@ for pos in range(len(out_list)):
 packets = tuple(buf_list)
 
 if __name__ == "__main__":
-    print BOM_list
-    print packets[2]
-    print packets[55]['cut_name']
+#    print BOM_list
+    print packets[3]
+    print packets[95]['cut_name']
     print
     print [packets.index(pack) for pack in packets if pack['group'] == 'IMU']
-    er = (34,'gerg','4566',45,'eggw')
-    print er.index(45)
+    print 'packet94 name is ', packets[21]['name']
+#    er = (34,'gerg','4566',45,'eggw')
+#    print er.index(45)
