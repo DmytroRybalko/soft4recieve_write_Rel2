@@ -9,7 +9,7 @@ from soft4recieve_write_Rel2.set_working_path import base_data
 # Import data from core csv file for creating file structure
 bd_csv = csv.reader(base_data,delimiter=';')
 
-size_list, shift_list = [],[]
+size_list, shift_list, bin_list = [],[],[]
 type_list, long_name, cut_name, = [],[],[]
 val_list, group_list, BOM_list = [],[],[]
 
@@ -22,7 +22,15 @@ for column in bd_csv:
     val_list.append(int(column[5]))
     group_list.append(column[6])
     BOM_list.append(column[7])
+    bin_list.append('')
+
 long_name = [i.decode('cp1251') for i in long_name]
+
+# Replace data type in type_list on python type data
+type_dict = dict([('char','B'),('long','l'),('double','d'),('float','f'),
+                  ('int','H'),('ushort','H'),('byte','b'),('unsignedint','I'),
+                  ('long double','10s')])
+type_list = [type_dict[t] for t in type_list]
 
 # Create data store structure
 buf_list = []
@@ -36,6 +44,7 @@ for pos in range(len(size_list)):
     buf_dic['val'] = val_list[pos]
     buf_dic['group'] = group_list[pos]
     buf_dic['BOM'] = BOM_list[pos]
+    buf_dic['bin'] = bin_list[pos]
     buf_list.append(buf_dic)
     del buf_dic
 packets = tuple(buf_list)
@@ -58,10 +67,10 @@ if __name__ == "__main__":
     print 'group_list', group_list
     print '======================='
     print 'BOM_list', BOM_list
+    print '======================='
+    print 'bin_list', bin_list
     print packets[2]
     print packets[95]['cut_name']
     print
     print [packets.index(pack) for pack in packets if pack['group'] == 'IMU']
     print 'packet94 name is ', packets[21]['name']
-#    er = (34,'gerg','4566',45,'eggw')
-#    print er.index(45)
