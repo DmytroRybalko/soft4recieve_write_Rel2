@@ -21,19 +21,27 @@ from main_lib import *
 file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
 # Create dictionary of binary files for converting
 file_dict = sort_files(file_list,'bin')
-#==============================================================================
-# Choose first file from file_dict
-first_count = 0
-for ord_num in sorted(file_dict):
-    if first_count == 0:
-        first_file = open(file_dict[ord_num],'r')
-    else:
-        break
-#==============================================================================
-# Read first line from first binary file to analyse it
-first_line = first_file.read(1100)# My propositions: set this number as constant
-first_file.close()
 
-print get_path(conv_data)['in1']
-print
-print first_line
+def get_available_data():
+    """
+    Define groups of sources (SNS,KNS,IMU,ODO,SINS) which data has been written
+    to raw files.
+
+    Keyword arguments:
+
+    """
+
+
+
+if __name__ == "__main__":
+    # Create list of files for converting
+    file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
+    # Create dictionary of binary files for converting
+    file_dict = sort_files(file_list,'bin')
+    row_count = 0
+    #    print map(sorted,[[2,1],[14,5]])
+    #    print wrap4read_files(get_first_line)
+    print wrap4read_files()
+    we = ['qwe','4','ref','d35gtr']
+    #    print map(methodcaller('isalpha'),we)
+    s = 'isalpha'
