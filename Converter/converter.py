@@ -8,8 +8,10 @@ which data he or she can convert. Converted data save into text file.
 
 import glob
 import itertools
+from operator import add
 from set_working_path import conv_data
 from main_lib import *
+from data_structure import packets
 
 #==============================================================================
 # First we have to find out which data source groups are in binary file. For
@@ -29,9 +31,13 @@ def get_first_line(file_dict):
     """
     first_file = min(file_dict)
     raw_file = open(file_dict[first_file],'r')
-    first_line = raw_file.readline()
+    first_line = raw_file.readline()[:-2] #replace \r\n symbols
     raw_file.close()
-    return first_line
+    if sum([i['size'] for i in packets])*2 == len(first_line):
+        return first_line
+    else:
+        print 'Invalid length of file\'s string!%s' % len(first_line)
+        return None
 
 def get_available_data(file_dict):
     """
@@ -43,12 +49,7 @@ def get_available_data(file_dict):
     """
 
     # Extract first line from the first file in file_dict
-    first_file = min(file_dict)
-    raw_file = open(file_dict[first_file],'r')
-    first_line = raw_file.readline()
-    raw_file.close()
-    return first_line
-
+    first_file = get_first_line(file_dict)
 
 #    for shift, size, pos in zip(fd['shift'],fd['size'],range(len(fd['size']))):
 #        fd['bin'][pos] = fline[shift*2:shift*2 + size/4]
@@ -62,5 +63,5 @@ def get_available_data(file_dict):
 
 
 if __name__ == "__main__":
-#    print min(file_dict)
-    print get_available_data(file_dict)
+#    print sum([i['size'] for i in packets])*2
+    print get_first_line(file_dict)
