@@ -7,6 +7,7 @@ which data he or she can convert. Converted data save into text file.
 """
 
 import glob
+import itertools
 from set_working_path import conv_data
 from main_lib import *
 
@@ -22,7 +23,17 @@ file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
 # Create dictionary of binary files for converting
 file_dict = sort_files(file_list,'bin')
 
-def get_available_data():
+def get_first_line(file_dict):
+    """
+    Function extract and return first line from the first file in file_dict.
+    """
+    first_file = min(file_dict)
+    raw_file = open(file_dict[first_file],'r')
+    first_line = raw_file.readline()
+    raw_file.close()
+    return first_line
+
+def get_available_data(file_dict):
     """
     Define groups of sources (SNS,KNS,IMU,ODO,SINS) which data has been written
     to raw files.
@@ -31,17 +42,25 @@ def get_available_data():
 
     """
 
+    # Extract first line from the first file in file_dict
+    first_file = min(file_dict)
+    raw_file = open(file_dict[first_file],'r')
+    first_line = raw_file.readline()
+    raw_file.close()
+    return first_line
+
+
+#    for shift, size, pos in zip(fd['shift'],fd['size'],range(len(fd['size']))):
+#        fd['bin'][pos] = fline[shift*2:shift*2 + size/4]
+#        # Choose the source groups which don't contain symbol '#'(23)
+#    for source in ad.keys():
+#        pos = ad[source][0]
+#        atom = fd['bin'][pos]
+#        if atom == '23' or ''.join(atom.split('23')) == '':# check if every element from range consist of '23'
+#            ad.pop(source)# delete particular key if true
+#    return ad
 
 
 if __name__ == "__main__":
-    # Create list of files for converting
-    file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
-    # Create dictionary of binary files for converting
-    file_dict = sort_files(file_list,'bin')
-    row_count = 0
-    #    print map(sorted,[[2,1],[14,5]])
-    #    print wrap4read_files(get_first_line)
-    print wrap4read_files()
-    we = ['qwe','4','ref','d35gtr']
-    #    print map(methodcaller('isalpha'),we)
-    s = 'isalpha'
+#    print min(file_dict)
+    print get_available_data(file_dict)
