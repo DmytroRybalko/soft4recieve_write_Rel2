@@ -7,7 +7,7 @@ which data he or she can convert. Converted data save into text file.
 """
 
 import glob
-import itertools
+import re
 from operator import add
 from set_working_path import conv_data
 from main_lib import *
@@ -64,12 +64,17 @@ def show_available_data(new_packets):
     """
     print '=============================================='
     print u'Доступные источники данных для восстановления:'
-    for source in new_packets:
-        print '%s: %s' % (source['group'],source['name'])
+    for pack in new_packets:
+        if pack['cut_name']:
+            if pack['group'] == 'IMU' and pack['cut_name'][0] == 'd':# filter Sec, Frame/Count name
+                print '%s:\t%s' % (pack['group'], pack['cut_name'])
+            elif pack['group'] != 'IMU':
+                print '%s:\t%s' % (pack['group'], pack['cut_name'])
     print '=============================================='
 
 if __name__ == "__main__":
 #    print get_first_line(file_dict)
 #    print [i['bin'] for i in get_available_data(file_dict)[:]]
 #    print len([i['bin'] for i in get_available_data(file_dict)[:]])
-    print
+    p = re.compile('d.*')
+#    print p.match('dPhi')
