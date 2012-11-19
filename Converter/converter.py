@@ -58,8 +58,18 @@ def get_available_data(file_dict):
             buf.append(p)
     return tuple(buf)
 
+def show_available_data(new_packets):
+    """
+    This function offers to user list of available data for converting.
+    """
+    print '=============================================='
+    print u'Доступные источники данных для восстановления:'
+    for source in new_packets:
+        print '%s: %s' % (source['group'],source['name'])
+    print '=============================================='
+
 if __name__ == "__main__":
 #    print get_first_line(file_dict)
-    print [i['bin'] for i in get_available_data(file_dict)[:]]
-    print len([i['bin'] for i in get_available_data(file_dict)[:]])
-#    print len(''.join(get_available_data(file_dict)[1]['bin'].split('23')))
+#    print [i['bin'] for i in get_available_data(file_dict)[:]]
+#    print len([i['bin'] for i in get_available_data(file_dict)[:]])
+    print
