@@ -45,23 +45,21 @@ def get_available_data(file_dict):
     to raw files.
 
     Keyword arguments:
-
+    file_dict -- dictionary which contains working path.
+    buf -- list of dictionaries which contain information about data for
+    converting.
     """
-
-    # Extract first line from the first file in file_dict
-    first_file = get_first_line(file_dict)
-
-#    for shift, size, pos in zip(fd['shift'],fd['size'],range(len(fd['size']))):
-#        fd['bin'][pos] = fline[shift*2:shift*2 + size/4]
-#        # Choose the source groups which don't contain symbol '#'(23)
-#    for source in ad.keys():
-#        pos = ad[source][0]
-#        atom = fd['bin'][pos]
-#        if atom == '23' or ''.join(atom.split('23')) == '':# check if every element from range consist of '23'
-#            ad.pop(source)# delete particular key if true
-#    return ad
-
+    first_line = get_first_line(file_dict)
+    buf = []
+    # Choose the source groups which don't contain symbol '#'(23)
+    for p in packets:
+        p['bin'] = first_line[p['shift']*2:p['shift']*2 + p['size']*2]
+        if ''.join(p['bin'].split('23')) != '':
+            buf.append(p)
+    return tuple(buf)
 
 if __name__ == "__main__":
-#    print sum([i['size'] for i in packets])*2
-    print get_first_line(file_dict)
+#    print get_first_line(file_dict)
+    print [i['bin'] for i in get_available_data(file_dict)[:]]
+    print len([i['bin'] for i in get_available_data(file_dict)[:]])
+#    print len(''.join(get_available_data(file_dict)[1]['bin'].split('23')))
