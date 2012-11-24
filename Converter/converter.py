@@ -56,15 +56,15 @@ def get_available_data(file_dict):
         p['bin'] = first_line[p['shift']*2:p['shift']*2 + p['size']*2]
         if ''.join(p['bin'].split('23')) != '':
             buf.append(p)
-    return tuple(buf)
+    return (buf)
 
-def show_available_data(new_packets):
+def show_available_data(in_data):
     """
     This function offers to user list of available data for converting.
     """
     print '=============================================='
     print u'Доступные источники данных для восстановления:'
-    for pos_pack in enumerate(new_packets):
+    for pos_pack in enumerate(in_data):
         pos, pack = pos_pack[0], pos_pack[1]
         if pack['cut_name']:
             if pack['group'] == 'IMU' and pack['cut_name'][0] == 'd':# filter Sec, Frame/Count name
@@ -73,11 +73,27 @@ def show_available_data(new_packets):
                 print '%s:\t%s\t(%d)' % (pack['group'], pack['name'], pos)
     print '=============================================='
 
-def get_user_data(new_packets):
+def get_user_data(in_data):
     """
-    Function takes list of chosen by user parameters.
+    Function get in_data list of available data and return list of parameters
+    chosen by user.
     """
     user_data = raw_input('Input list of values for converting: ')
+    try:
+        buf = []
+        user_in = map(int,user_data.split(','))
+        if set(user_in).issubset(set(range(len(in_data)))):
+            for item in enumerate(in_data):
+                if item[0] in user_in:
+                    buf.append(in_data[item[0]])
+            in_data = buf
+            return in_data
+        else:
+            print 'You have input wrong data!'
+            return []
+    except:
+        print 'You have input wrong data again!'
+        return []
 
 def wrap4files(file_dict, user_fun):
     """
