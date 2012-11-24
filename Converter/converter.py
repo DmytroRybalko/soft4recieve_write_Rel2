@@ -81,10 +81,12 @@ def wrap4files(file_dict, user_fun):
     file_dict -- dictionary which contains names of working files'
     user_fun -- user function
     """
-    for ord_num in sorted(file_dict):# Open binary files for reading
-        raw_file = open(file_dict[ord_num],'r')
-        for line in raw_file:
-            user_fun()
+    for files in enumerate(sorted(file_dict)):# Open binary files for reading
+        file_num = files[0]
+        raw_file = open(file_dict[files[1]],'r')
+        for lines in enumerate(raw_file):
+            line_num, line = lines[0], lines[1]
+            user_fun(file_num,line_num,line)
         raw_file.close()
 
 if __name__ == "__main__":
