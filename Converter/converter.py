@@ -67,10 +67,25 @@ def show_available_data(new_packets):
     for pack in new_packets:
         if pack['cut_name']:
             if pack['group'] == 'IMU' and pack['cut_name'][0] == 'd':# filter Sec, Frame/Count name
-                print '%s:\t%s' % (pack['group'], pack['cut_name'])
+                print '%s:\t%s' % (pack['group'], pack['name'])
             elif pack['group'] != 'IMU':
-                print '%s:\t%s' % (pack['group'], pack['cut_name'])
+                print '%s:\t%s' % (pack['group'], pack['name'])
     print '=============================================='
+
+def wrap4files(file_dict, user_fun):
+    """
+    Function extract line from file from file group and pass it to particular
+    function for father mapping.
+
+    Keyword arguments:
+    file_dict -- dictionary which contains names of working files'
+    user_fun -- user function
+    """
+    for ord_num in sorted(file_dict):# Open binary files for reading
+        raw_file = open(file_dict[ord_num],'r')
+        for line in raw_file:
+            user_fun()
+        raw_file.close()
 
 if __name__ == "__main__":
 #    print get_first_line(file_dict)
