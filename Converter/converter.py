@@ -64,13 +64,20 @@ def show_available_data(new_packets):
     """
     print '=============================================='
     print u'Доступные источники данных для восстановления:'
-    for pack in new_packets:
+    for pos_pack in enumerate(new_packets):
+        pos, pack = pos_pack[0], pos_pack[1]
         if pack['cut_name']:
             if pack['group'] == 'IMU' and pack['cut_name'][0] == 'd':# filter Sec, Frame/Count name
-                print '%s:\t%s' % (pack['group'], pack['name'])
+                print '%s:\t%s\t(%d)' % (pack['group'], pack['name'], pos)
             elif pack['group'] != 'IMU':
-                print '%s:\t%s' % (pack['group'], pack['name'])
+                print '%s:\t%s\t(%d)' % (pack['group'], pack['name'], pos)
     print '=============================================='
+
+def get_user_data(new_packets):
+    """
+    Function takes list of chosen by user parameters.
+    """
+    user_data = raw_input('Input list of values for converting: ')
 
 def wrap4files(file_dict, user_fun):
     """
