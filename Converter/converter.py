@@ -112,6 +112,13 @@ def wrap4files(file_dict, user_fun):
             user_fun(file_num,line_num,line)
         raw_file.close()
 
+def extract_data():
+    """
+    Function extracts chosen data from hexadecimal string line and returns
+    their as formatted string.
+    """
+
+
 class Data2File():
     """
     Function takes user_file's object for:
@@ -134,7 +141,7 @@ class Data2File():
         Function takes user_file's object for setting its mode depending on
         file_num and line_num values.
         """
-
+        pass
 
 if __name__ == "__main__":
 #    print get_first_line(file_dict)
