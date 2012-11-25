@@ -112,6 +112,30 @@ def wrap4files(file_dict, user_fun):
             user_fun(file_num,line_num,line)
         raw_file.close()
 
+class Data2File():
+    """
+    Function takes user_file's object for:
+    setting its mode depending on file_num and line_num values;
+    composing name of the out file depending on chosen data source groups;
+    formatting and writing data to file.
+
+    Keyword arguments:
+
+    """
+    def __init__(self,user_file,user_data,file_num,line_num,line):
+        self.user_file = user_file
+        self.user_data = user_data
+        self.file_num = file_num
+        self.line_num = line_num
+        self.line = line
+
+    def SetFileMode(self,user_file,file_num,line_num):
+        """
+        Function takes user_file's object for setting its mode depending on
+        file_num and line_num values.
+        """
+
+
 if __name__ == "__main__":
 #    print get_first_line(file_dict)
 #    print [i['bin'] for i in get_available_data(file_dict)[:]]
