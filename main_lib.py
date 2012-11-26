@@ -72,18 +72,18 @@ def sort_files(file_list,sep=''):
         D = dict(zip(key,val)) # Формируем словарь вида {num:'file name'}
     return D
 
-def format_data(data):
+def format_data(data,footer=' '):
     """
     Function format data depending on data's type.
     """
     if isinstance(data,float):
-        return data.__format__(data_style['f_style'])
+        return data.__format__(data_style['f_style']) + footer
     elif isinstance(data,int):
-        return data.__format__(data_style['i_style'])
+        return data.__format__(data_style['i_style']) + footer
     elif isinstance(data,long):
-        return data.__format__(data_style['l_style'])
+        return data.__format__(data_style['l_style']) + footer
     elif isinstance(data,str):
-        return data.__format__(data_style['s_style'])
+        return data.__format__(data_style['s_style']) + footer
     else:
         print 'Problem with type!'
         return None
