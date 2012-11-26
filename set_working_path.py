@@ -21,3 +21,5 @@ conv_data = {'win32':{'in1':win_root_path +'Converter\\BIN_files',
              'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
                        'out1':lin_root_path +'/Converter/CONVERTED_files'}}
 
+# Set format style for output text files
+data_style = {'f_style':'.8f','i_style':'d','l_style':'l','s_style':'s'}

@@ -7,6 +7,7 @@ project's files.
 import sys
 import os.path
 import copy
+from set_working_path import data_style
 
 def create_path(os_dict):
     """
@@ -70,3 +71,19 @@ def sort_files(file_list,sep=''):
         val.append(fname)
         D = dict(zip(key,val)) # Формируем словарь вида {num:'file name'}
     return D
+
+def format_data(data):
+    """
+    Function format data depending on data's type.
+    """
+    if isinstance(data,float):
+        return data.__format__(data_style['f_style'])
+    elif isinstance(data,int):
+        return data.__format__(data_style['i_style'])
+    elif isinstance(data,long):
+        return data.__format__(data_style['l_style'])
+    elif isinstance(data,str):
+        return data.__format__(data_style['s_style'])
+    else:
+        print 'Problem with type!'
+        return None
