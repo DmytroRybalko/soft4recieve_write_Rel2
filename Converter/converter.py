@@ -7,11 +7,13 @@ which data he or she can convert. Converted data save into text file.
 """
 
 import glob
-import re
+import struct
 from operator import add
 from set_working_path import conv_data
 from main_lib import *
 from data_structure import packets
+from moSINS.lib4kkp.lib4kkp import  extract_kkp_frame_cell
+from moSINS.lib4sns.lib4sns import extract_sns_time
 
 #==============================================================================
 # First we have to find out which data source groups are in binary file. For
@@ -95,57 +97,44 @@ def get_user_data(in_data):
         print 'You have input wrong data again!'
         return []
 
-def wrap4files(file_dict, user_fun):
+def wrap4files(file_dict, packets, usr_fun, usr_file):
     """
     Function extract line from file from file group and pass it to particular
     function for father mapping.
 
     Keyword arguments:
     file_dict -- dictionary which contains names of working files'
-    user_fun -- user function
+    usr_fun -- user function
     """
     for files in enumerate(sorted(file_dict)):# Open binary files for reading
         file_num = files[0]
         raw_file = open(file_dict[files[1]],'r')
         for lines in enumerate(raw_file):
             line_num, line = lines[0], lines[1]
-            user_fun(file_num,line_num,line)
+            data2file = usr_fun(packets,line,file_num,line_num)
+            usr_file.write(''.join(data2file)[:-1])# replace last separator
         raw_file.close()
+    usr_file.close()
 
-def extract_data():
+def extract_data(usr_packets,hex_line):
     """
     Function extracts chosen data from hexadecimal string line and returns
     their as formatted string.
     """
-
-
-class Data2File():
-    """
-    Function takes user_file's object for:
-    setting its mode depending on file_num and line_num values;
-    composing name of the out file depending on chosen data source groups;
-    formatting and writing data to file.
-
-    Keyword arguments:
-
-    """
-    def __init__(self,user_file,user_data,file_num,line_num,line):
-        self.user_file = user_file
-        self.user_data = user_data
-        self.file_num = file_num
-        self.line_num = line_num
-        self.line = line
-
-    def SetFileMode(self,user_file,file_num,line_num):
-        """
-        Function takes user_file's object for setting its mode depending on
-        file_num and line_num values.
-        """
-        pass
+    buf = []
+    for p in usr_packets:
+        hex_val = hex_line[p['shift']*2:p['shift']*2 + p['size']]
+        dec_val = struct.unpack(p['BOM'] + p['type'], hex_val.decode('hex'))[0]
+        if p['cut_name'] == 'Frame/Count': # extract KKP's frame and cell
+            frame, cell = extract_kkp_frame_cell(dec_val)
+            buf.append(format_data(frame,'\t'))
+            buf.append(format_data(cell,'\t'))
+        elif p['cut_name'] == 'Tm_SNS':# extract sns time
+            tm_sns = extract_sns_time(bit_inversion(hex_val))
+            buf.append(format_data(tm_sns,'\t'))
+        else:
+            buf.append(format_data(dec_val,'\t'))
+    return buf
 
 if __name__ == "__main__":
-#    print get_first_line(file_dict)
-#    print [i['bin'] for i in get_available_data(file_dict)[:]]
-#    print len([i['bin'] for i in get_available_data(file_dict)[:]])
-    p = re.compile('d.*')
-#    print p.match('dPhi')
+    pass
