@@ -3,7 +3,6 @@
 """
 This file contains paths for working files.
 """
-from soft4recieve_write_Rel2.main_lib import get_path, get_path4file
 
 # Set root path to all working files.
 win_root_path = 'd:\\Programming\\Python_Projects\\soft4recieve_write_Rel2\\'
@@ -13,7 +12,7 @@ lin_root_path = '/home/dmytro/Knowledge/Programming/Python_Projects/soft4recieve
 base_data_path = {'win32':{'in1':win_root_path},
                   'linux2':{'in1':lin_root_path}}
 # Get base_data.csv file object
-base_data = get_path4file(base_data_path,'in1','base_data.csv','rb')
+base_file = 'base_data.csv'
 
 # Set path to converter.py
 conv_data = {'win32':{'in1':win_root_path +'Converter\\BIN_files',
