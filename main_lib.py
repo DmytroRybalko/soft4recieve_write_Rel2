@@ -87,3 +87,17 @@ def format_data(data):
     else:
         print 'Problem with type!'
         return None
+
+def bit_inversion(inv_str):
+    """
+    Function inverts pair of symbols in hex string .
+    """
+    inv_order = list(inv_str)
+    dir_order = ['' for i in range(len(inv_str))]
+    for i in range(len(inv_str)):
+        if i == 0:
+            dir_order[0:2] = inv_order[-2:]
+        else:
+            dir_order[2*i:2*(i+1)] = inv_order[-2*(i+1):(-2*i)]
+    return ''.join(dir_order)
+

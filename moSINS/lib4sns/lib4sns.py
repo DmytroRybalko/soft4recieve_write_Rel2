@@ -16,18 +16,6 @@ ms_in_hour = 3600000 #quantity of milisecond in hour
 ms_in_min = 60000    #quantity of milisecond in minute
 ms_in_sec = 1000     #quantity of milisecond in second
 
-def bit_inversion(inv_str):
-    """
-    Function inverts hex string.
-    """
-    inv_order = list(inv_str)
-    dir_order = ['' for i in range(len(inv_str))]
-    for i in range(len(inv_str)):
-        if i == 0:
-            dir_order[0:2] = inv_order[-2:]
-        else:
-            dir_order[2*i:2*(i+1)] = inv_order[-2*(i+1):(-2*i)]
-    return ''.join(dir_order)
 
 def extract_sns_time(string):
     """
