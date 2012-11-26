@@ -116,7 +116,7 @@ def wrap4files(file_dict, packets, usr_fun, usr_file):
         raw_file.close()
     usr_file.close()
 
-def extract_data(usr_packets,hex_line):
+def extract_data(usr_packets,hex_line,sep):
     """
     Function extracts chosen data from hexadecimal string line and returns
     their as formatted string.
@@ -127,13 +127,13 @@ def extract_data(usr_packets,hex_line):
         dec_val = struct.unpack(p['BOM'] + p['type'], hex_val.decode('hex'))[0]
         if p['cut_name'] == 'Frame/Count': # extract KKP's frame and cell
             frame, cell = extract_kkp_frame_cell(dec_val)
-            buf.append(format_data(frame,'\t'))
-            buf.append(format_data(cell,'\t'))
+            buf.append(format_data(frame,sep))
+            buf.append(format_data(cell,sep))
         elif p['cut_name'] == 'Tm_SNS':# extract sns time
             tm_sns = extract_sns_time(bit_inversion(hex_val))
-            buf.append(format_data(tm_sns,'\t'))
+            buf.append(format_data(tm_sns,sep))
         else:
-            buf.append(format_data(dec_val,'\t'))
+            buf.append(format_data(dec_val,sep))
     return buf
 
 if __name__ == "__main__":
