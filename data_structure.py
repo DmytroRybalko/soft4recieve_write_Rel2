@@ -13,7 +13,7 @@ bd_csv = csv.reader(base_data,delimiter=';')
 
 size_list, shift_list, bin_list = [],[],[]
 type_list, long_name, cut_name, = [],[],[]
-val_list, group_list, BOM_list = [],[],[]
+group_list, BOM_list = [],[]
 
 for column in bd_csv:
     size_list.append(int(column[0]))
@@ -21,12 +21,10 @@ for column in bd_csv:
     type_list.append(column[2])
     long_name.append(column[3])
     cut_name.append(column[4])
-    val_list.append(int(column[5]))
-    group_list.append(column[6])
-    BOM_list.append(column[7])
-    bin_list.append('')
+    group_list.append(column[5])
+    BOM_list.append(column[6])
 
-long_name = [i.decode('cp1251') for i in long_name]
+# long_name = [i.decode('cp1251') for i in long_name]
 
 # Replace data type in type_list on python type data
 type_dict = dict([('char','B'),('long','l'),('double','d'),('float','f'),
@@ -43,10 +41,10 @@ for pos in range(len(size_list)):
     buf_dic['type'] = type_list[pos]
     buf_dic['name'] = long_name[pos]
     buf_dic['cut_name'] = cut_name[pos]
-    buf_dic['val'] = val_list[pos]
+    # buf_dic['val'] = val_list[pos]
     buf_dic['group'] = group_list[pos]
     buf_dic['BOM'] = BOM_list[pos]
-    buf_dic['bin'] = bin_list[pos]
+    # buf_dic['bin'] = bin_list[pos]
     buf_list.append(buf_dic)
     del buf_dic
 packets = tuple(buf_list)
@@ -64,13 +62,13 @@ if __name__ == "__main__":
     print '======================='
     print 'cut_name', cut_name
     print '======================='
-    print 'val_list', val_list
+    # print 'val_list', val_list
     print '======================='
     print 'group_list', group_list
     print '======================='
     print 'BOM_list', BOM_list
     print '======================='
-    print 'bin_list', bin_list
+    # print 'bin_list', bin_list
     print packets[2]
     print packets[95]['cut_name']
     print
