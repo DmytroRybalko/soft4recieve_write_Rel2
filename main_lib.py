@@ -69,8 +69,7 @@ def sort_files(file_list,sep=''):
         number = part1 + part2        # form complex number with hours and minutes
         key.append(int(number))
         val.append(fname)
-        D = dict(zip(key,val)) # Формируем словарь вида {num:'file name'}
-    return D
+    return dict(zip(key,val))
 
 def format_data(data,footer=' '):
     """
