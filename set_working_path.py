@@ -15,14 +15,15 @@ base_data_path = {'win32':{'in1':win_root_path},
 base_file = 'base_data.csv'
 
 # Set path to converter.py
-conv_data = {'win32':{'in1':win_root_path +'Converter\\BIN_files',
-                      'out1':win_root_path +'Converter\\CONVERTED_files'},
+conv_data = {'win32':{'in1':win_root_path +'Converter\\BIN_files\\',
+                      'out1':win_root_path +'Converter\\CONVERTED_files\\'},
              'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
                        'out1':lin_root_path +'/Converter/CONVERTED_files'}}
 
 # Set path for testing functions
 test_data = {'win32':{'get_first_line':win_root_path +
-                                       'Converter\\test\\Converter\\get_first_line\\'}}
+                      'Converter\\test\\Converter\\get_first_line\\right_test\\',
+                      'common':win_root_path + 'Converter\\Converter\\BIN_files\\'}}
 
 # Set format style for output text files
 data_style = {'f_style':'.8f','i_style':'d','l_style':'l','s_style':'s'}
