@@ -4,8 +4,8 @@
 The script is purposed for data structure composition from base csv-file.
 """
 import csv
-from set_working_path import base_data_path, base_file
-from main_lib import get_path4file
+from soft4recieve_write_Rel2.set_working_path import base_data_path, base_file
+from soft4recieve_write_Rel2.main_lib import get_path4file
 
 # Import data from core csv file for creating file structure
 base_data = get_path4file(base_data_path,'in1',base_file,'rb')

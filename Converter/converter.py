@@ -9,11 +9,11 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from set_working_path import conv_data
-from main_lib import *
-from data_structure import packets
-from moSINS.lib4kkp.lib4kkp import  extract_kkp_frame_cell
-from moSINS.lib4sns.lib4sns import extract_sns_time
+from soft4recieve_write_Rel2.set_working_path import conv_data
+from soft4recieve_write_Rel2.main_lib import *
+from soft4recieve_write_Rel2.data_structure import packets
+#from moSINS.lib4kkp.lib4kkp import  extract_kkp_frame_cell
+#from moSINS.lib4sns.lib4sns import extract_sns_time
 
 #==============================================================================
 # First we have to find out which data source groups are in binary file. For
