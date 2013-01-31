@@ -33,7 +33,7 @@ def get_first_line(file_dict):
     """
     first_file = min(file_dict)
     raw_file = open(file_dict[first_file],'r')
-    first_line = raw_file.readline()[:-2] #replace \r\n symbols
+    first_line = raw_file.readline()[:-1] #replace \n symbol
     raw_file.close()
     if sum([i['size'] for i in packets])*2 == len(first_line):
         return first_line
