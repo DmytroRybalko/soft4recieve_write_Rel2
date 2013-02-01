@@ -88,8 +88,7 @@ def get_user_data(in_data):
             for item in enumerate(in_data):
                 if item[0] in user_in:
                     buf.append(in_data[item[0]])
-            in_data = buf
-            return in_data
+            return buf
         else:
             print 'You have input wrong data!'
             return []
