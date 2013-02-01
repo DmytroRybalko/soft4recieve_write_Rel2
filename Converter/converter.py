@@ -57,7 +57,8 @@ def get_available_data(file_dict):
     for p in packets:
         p['bin'] = first_line[p['shift']*2:p['shift']*2 + p['size']*2]
         if ''.join(p['bin'].split('23')) != '':
-            buf.append(p)
+            if p['cut_name']:# add only 'main' packets
+                buf.append(p)
     return (buf)
 
 def show_available_data(in_data):
