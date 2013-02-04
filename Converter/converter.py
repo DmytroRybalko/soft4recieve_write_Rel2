@@ -11,6 +11,8 @@ import struct
 from operator import add
 from soft4recieve_write_Rel2.set_working_path import conv_data
 from soft4recieve_write_Rel2.main_lib import *
+from soft4recieve_write_Rel2.moSINS.lib4kkp import extract_kkp_frame_cell
+from soft4recieve_write_Rel2.moSINS.lib4sns import extract_sns_time
 from soft4recieve_write_Rel2.data_structure import packets
 #from moSINS.lib4kkp.lib4kkp import  extract_kkp_frame_cell
 #from moSINS.lib4sns.lib4sns import extract_sns_time
@@ -141,15 +143,33 @@ def line_from_file(file_dict):
         for lines in enumerate(open(file_dict[files[1]],'r')):
             yield (files[1],lines[0],lines[1])
 
+def main_fun(user_data):
+    """
+    Function extract data from bin files according to user_data structure.
+
+    Keyword arguments:
+    user_data - list of dictionaries of available data for extracting.
+    """
+
 
 if __name__ == "__main__":
     # Create list of files for converting
     file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
     # Create dictionary of binary files for converting
     file_dict = sort_files(file_list,'bin')
+    # Get list of available data
+    new_packets = get_available_data(file_dict)
+    # Show list of available data
+    show_available_data(new_packets)
+    # Get user data
+    user_data = get_user_data(new_packets)
+
+    result = extract_data(user_data,get_first_line(file_dict),'\t')
     #====================================
     # Main loop
-    
+    for fun in range(4):
+        (file_num,line_num,rawline) = line_from_file(file_dict)
+        print 
     # Create generator for extracting rows, row's and file's ordering numbers from files
 #    complex_data = ((files[1],lines[0],lines[1]) for files in enumerate(sorted(file_dict))
 #         for lines in enumerate(open(file_dict[files[1]],'r')))
