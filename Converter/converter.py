@@ -22,10 +22,6 @@ from soft4recieve_write_Rel2.data_structure import packets
 # contain this symbol.
 
 #==============================================================================
-# Create list of files for converting
-file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
-# Create dictionary of binary files for converting
-file_dict = sort_files(file_list,'bin')
 
 def get_first_line(file_dict):
     """
@@ -136,5 +132,29 @@ def extract_data(usr_packets,hex_line,sep):
             buf.append(format_data(dec_val,sep))
     return buf
 
+def line_from_file(file_dict):
+    """
+    Function extract rows, row's and file's ordering numbers from files of
+    file_dicts
+    """
+    for files in enumerate(sorted(file_dict)):# Open binary files for reading
+        for lines in enumerate(open(file_dict[files[1]],'r')):
+            yield (files[1],lines[0],lines[1])
+
+
 if __name__ == "__main__":
-    pass
+    # Create list of files for converting
+    file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
+    # Create dictionary of binary files for converting
+    file_dict = sort_files(file_list,'bin')
+    #====================================
+    # Main loop
+    
+    # Create generator for extracting rows, row's and file's ordering numbers from files
+#    complex_data = ((files[1],lines[0],lines[1]) for files in enumerate(sorted(file_dict))
+#         for lines in enumerate(open(file_dict[files[1]],'r')))
+    sd = line_from_file(file_dict)
+    print next(sd)
+    print next(sd)
+    print next(sd)
+    print next(sd)
