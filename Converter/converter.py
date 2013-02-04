@@ -123,7 +123,7 @@ def extract_data(usr_packets,hex_line,sep):
     """
     buf = []
     for p in usr_packets:
-        hex_val = hex_line[p['shift']*2:p['shift']*2 + p['size']]
+        hex_val = hex_line[p['shift']*2:p['shift']*2 + p['size']*2]
         dec_val = struct.unpack(p['BOM'] + p['type'], hex_val.decode('hex'))[0]
         if p['cut_name'] == 'Frame/Count': # extract KKP's frame and cell
             frame, cell = extract_kkp_frame_cell(dec_val)
