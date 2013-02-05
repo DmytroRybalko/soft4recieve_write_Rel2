@@ -15,8 +15,9 @@ base_data_path = {'win32':{'in1':win_root_path},
 base_file = 'base_data.csv'
 
 # Set path to converter.py
-conv_data = {'win32':{'in1':win_root_path +'Converter\\BIN_files\\',
-                      'out1':win_root_path +'Converter\\CONVERTED_files\\'},
+
+conv_data = {'win32':{'in1':win_root_path +'Converter\\Converter\\BIN_files\\',
+                      'out_main':win_root_path + 'Converter\\Converter\\CONVERTED_files\\'},
              'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
                        'out1':lin_root_path +'/Converter/CONVERTED_files'}}
 

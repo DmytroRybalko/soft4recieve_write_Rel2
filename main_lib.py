@@ -100,3 +100,38 @@ def bit_inversion(inv_str):
             dir_order[2*i:2*(i+1)] = inv_order[-2*(i+1):(-2*i)]
     return ''.join(dir_order)
 
+def head2file(f_path,user_data):
+    """
+    Function create file with f_name, write haed string and gets back file
+    object of created file.
+
+    Keyword arguments:
+    f_path -- full path for file
+    user_data -- list that contains data chosen by user.
+    """
+    try:
+        # Get full path to file for writing head string
+        f = open(get_path(f_path),'w')
+        head = ''.join([p['cut_name'] + '\t' for p in user_data] + '\n\n')
+        f.write(head)
+        f.close()
+        # Get back file's object for adding data
+        return open(get_path(f_path),'a')
+    except:
+        'Something wrong with path file: %s'%f_path
+        return None
+
+
+def data2file(data,f_name):
+    """
+    Function write incoming string to file.
+
+    Keyword arguments:
+    data -- incoming data in string format
+    f_name -- file's object for writing data
+    """
+    try:
+
+        pass
+    except:
+        "Something wrong with writing in file!"
