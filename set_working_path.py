@@ -15,11 +15,22 @@ base_data_path = {'win32':{'in1':win_root_path},
 base_file = 'base_data.csv'
 
 # Set path to converter.py
+#==================== Path for functions============================
+# Local path to file which is created by 'main' function
+main_path = win_root_path + 'Converter\\Converter\\'
+# Template lambda x, y:main_path + 'file_has_%sat%s'%(x,y) description:
+# x - string contains group's names of data has been chosed by user.
+# X sting extracted from get_user_data function list.
+# y - data is created from the first bin file's name.
+# Y string is got by function get1st_file_date
 
+#===================================================================
 conv_data = {'win32':{'in1':win_root_path +'Converter\\Converter\\BIN_files\\',
-                      'out_main':win_root_path + 'Converter\\Converter\\CONVERTED_files\\'},
+                      'main_fun': lambda x, y:main_path + 'file_has_%s_at%s'%(x,y)},
              'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
                        'out1':lin_root_path +'/Converter/CONVERTED_files'}}
+
+#===================================================================
 
 # Set path for testing functions
 test_data = {'win32':{'get_first_line':win_root_path +
