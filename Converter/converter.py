@@ -11,11 +11,9 @@ import struct
 from operator import add
 from soft4recieve_write_Rel2.set_working_path import conv_data
 from soft4recieve_write_Rel2.main_lib import *
-from soft4recieve_write_Rel2.moSINS.lib4kkp import extract_kkp_frame_cell
-from soft4recieve_write_Rel2.moSINS.lib4sns import extract_sns_time
+from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
+from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
 from soft4recieve_write_Rel2.data_structure import packets
-#from moSINS.lib4kkp.lib4kkp import  extract_kkp_frame_cell
-#from moSINS.lib4sns.lib4sns import extract_sns_time
 
 #==============================================================================
 # First we have to find out which data source groups are in binary file. For
@@ -134,6 +132,15 @@ def extract_data(usr_packets,hex_line,sep):
             buf.append(format_data(dec_val,sep))
     return buf
 
+def user_group_name2str(user_data):
+    """
+    Function combines string of group's names in user_data list.
+    """
+    try:
+        return ''.join(set([name['group'] + '_' for name in user_data]))
+    except:
+        "Problem in user_group_name2str function!"
+
 def line_from_file(file_dict):
     """
     Function extract rows, row's and file's ordering numbers from files of
@@ -143,7 +150,7 @@ def line_from_file(file_dict):
         for lines in enumerate(open(file_dict[files[1]],'r')):
             yield (files[1],lines[0],lines[1])
 
-def main_fun(user_data):
+def main_fun(file_dict,**funlist):
     """
     Function extract data from bin files according to user_data structure.
 
@@ -151,6 +158,9 @@ def main_fun(user_data):
     user_data - list of dictionaries of available data for extracting.
     """
 
+    for files in enumerate(sorted(file_dict)):# Open binary files for reading
+        for lines in enumerate(open(file_dict[files[1]],'r')):
+            pass
 
 if __name__ == "__main__":
     # Create list of files for converting
@@ -163,18 +173,20 @@ if __name__ == "__main__":
     show_available_data(new_packets)
     # Get user data
     user_data = get_user_data(new_packets)
-
+    head2file(get_path4file(conv_data,'out_main','main_test.dat','w'),user_data)
     result = extract_data(user_data,get_first_line(file_dict),'\t')
     #====================================
     # Main loop
-    for fun in range(4):
-        (file_num,line_num,rawline) = line_from_file(file_dict)
-        print 
+#    for fun in range(4):
+#        (file_num,line_num,rawline) = line_from_file(file_dict)
+#        print
     # Create generator for extracting rows, row's and file's ordering numbers from files
 #    complex_data = ((files[1],lines[0],lines[1]) for files in enumerate(sorted(file_dict))
 #         for lines in enumerate(open(file_dict[files[1]],'r')))
-    sd = line_from_file(file_dict)
-    print next(sd)
-    print next(sd)
-    print next(sd)
-    print next(sd)
+#    sd = line_from_file(file_dict)
+#    print next(sd)
+#    print next(sd)
+#    print next(sd)
+#    print next(sd)
+#    f1 = lambda x: x+2
+#    f1(3)
