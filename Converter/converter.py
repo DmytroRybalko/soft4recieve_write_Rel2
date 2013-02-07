@@ -9,7 +9,7 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from soft4recieve_write_Rel2.set_working_path import conv_data
+from soft4recieve_write_Rel2.set_working_path import conv_data,test_data
 from soft4recieve_write_Rel2.main_lib import *
 from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
 from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
@@ -139,7 +139,7 @@ def user_group_name2str(user_data):
     try:
         return ''.join(set([name['group'] + '_' for name in user_data]))
     except:
-        "Problem in user_group_name2str function!"
+        print "Problem in user_group_name2str function!"
 
 def line_from_file(file_dict):
     """
@@ -164,17 +164,27 @@ def main_fun(file_dict,**funlist):
 
 if __name__ == "__main__":
     # Create list of files for converting
-    file_list = glob.glob(get_path(conv_data)['in1'] + '*.dat')
+    file_list = glob.glob(get_path(test_data)['common'] + '*.dat')
     # Create dictionary of binary files for converting
     file_dict = sort_files(file_list,'bin')
+    # Get first file's name
+    full_name = file_dict[sorted(file_dict)[0]]
+    print "First file's name: \n", full_name
+    # Get date and time from full_name
+    date_from_bin_file = full_name.split('\\')[-1][10:-4]
+    print "Date and time: ", date_from_bin_file
+
+#    for key in sorted(file_dict):
+#        print file_dict[key]
+#    print
     # Get list of available data
-    new_packets = get_available_data(file_dict)
+#    new_packets = get_available_data(file_dict)
     # Show list of available data
-    show_available_data(new_packets)
+#    show_available_data(new_packets)
     # Get user data
-    user_data = get_user_data(new_packets)
-    head2file(get_path4file(conv_data,'out_main','main_test.dat','w'),user_data)
-    result = extract_data(user_data,get_first_line(file_dict),'\t')
+#    user_data = get_user_data(new_packets)
+#    head2file(get_path4file(conv_data,'out_main','main_test.dat','w'),user_data)
+#    result = extract_data(user_data,get_first_line(file_dict),'\t')
     #====================================
     # Main loop
 #    for fun in range(4):
