@@ -3,6 +3,19 @@
 """
 This file contains paths for working files.
 """
+import sys
+
+def create_path(os_dict):
+    """
+    Function return dictionary with path for working files depending on current
+    OS.
+
+    Keyword arguments:
+    os_dict -- dictionary that contains working paths for different OS.
+    """
+    for os_key in os_dict:
+        if sys.platform.startswith(os_key):
+            return os_dict[os_key]
 
 # ============= Set root path to all working files.
 win_root_path = 'd:\\Programming\\Python_Projects\\soft4recieve_write_Rel2\\'
@@ -10,7 +23,7 @@ lin_root_path = '/home/dmytro/Knowledge/Programming/Python_Projects/soft4recieve
 root_path = {'win32':win_root_path,
              'linux2':lin_root_path}
 # Set path to base_data.csv file.
-base_file = 'base_data.csv'
+base_file = create_path(root_path) + 'base_data.csv'
 
 #==================== Set paths for functions ============================
 
@@ -23,7 +36,7 @@ main_path = lambda x, y:'BIN_files\\' + 'file_has_%s_at%s'%(x,y)
 # y - data is created from the first bin file's name.
 # y string is got by function get1st_file_date
 
-# =================== Common pathes=======
+# =================== Common pathes =======
 root_main = 'Converter\\Converter\\'
 work_path = {'in1': root_main + 'BIN_files\\',
              'main_fun':main_path}
