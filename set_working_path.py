@@ -4,7 +4,7 @@
 This file contains paths for working files.
 """
 
-# Set root path to all working files.
+# ============= Set root path to all working files.
 win_root_path = 'd:\\Programming\\Python_Projects\\soft4recieve_write_Rel2\\'
 lin_root_path = '/home/dmytro/Knowledge/Programming/Python_Projects/soft4recieve_write_Rel2/'
 root_path = {'win32':win_root_path,
@@ -12,16 +12,9 @@ root_path = {'win32':win_root_path,
 # Set path to base_data.csv file.
 base_file = 'base_data.csv'
 
-# ============== Delete this!!!!!!================
-#base_data_path = {'win32':{'in1':win_root_path},
-#                  'linux2':{'in1':lin_root_path}}
-# Get base_data.csv file object
-#base_file = 'base_data.csv'
-#==================================================
-
-# Set path to converter.py
 #==================== Set paths for functions ============================
-root_main = 'Converter\\Converter\\'
+
+# ====== main fucntion=========
 # Local path to file which is created by 'main' function
 main_path = lambda x, y:'BIN_files\\' + 'file_has_%s_at%s'%(x,y)
 # main_path template description:
@@ -30,16 +23,10 @@ main_path = lambda x, y:'BIN_files\\' + 'file_has_%s_at%s'%(x,y)
 # y - data is created from the first bin file's name.
 # y string is got by function get1st_file_date
 
+# =================== Common pathes=======
+root_main = 'Converter\\Converter\\'
 work_path = {'in1': root_main + 'BIN_files\\',
              'main_fun':main_path}
-
-#===================================================================
-#conv_data = {'win32':{'in1':win_root_path +'Converter\\Converter\\BIN_files\\',
-#                      'main_fun': lambda x, y:main_path + 'file_has_%s_at%s'%(x,y)},
-#             'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
-#                       'out1':lin_root_path +'/Converter/CONVERTED_files'}}
-
-#===================================================================
 
 #====================== Set path for testing functions =========================
 root_test = 'Converter\\test\\Converter\\'
