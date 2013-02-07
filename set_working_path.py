@@ -7,35 +7,54 @@ This file contains paths for working files.
 # Set root path to all working files.
 win_root_path = 'd:\\Programming\\Python_Projects\\soft4recieve_write_Rel2\\'
 lin_root_path = '/home/dmytro/Knowledge/Programming/Python_Projects/soft4recieve_write_Rel2/'
-
+root_path = {'win32':win_root_path,
+             'linux2':lin_root_path}
 # Set path to base_data.csv file.
-base_data_path = {'win32':{'in1':win_root_path},
-                  'linux2':{'in1':lin_root_path}}
-# Get base_data.csv file object
 base_file = 'base_data.csv'
 
+# ============== Delete this!!!!!!================
+#base_data_path = {'win32':{'in1':win_root_path},
+#                  'linux2':{'in1':lin_root_path}}
+# Get base_data.csv file object
+#base_file = 'base_data.csv'
+#==================================================
+
 # Set path to converter.py
-#==================== Path for functions============================
+#==================== Set paths for functions ============================
+root_main = 'Converter\\Converter\\'
 # Local path to file which is created by 'main' function
-main_path = win_root_path + 'Converter\\Converter\\'
-# Template lambda x, y:main_path + 'file_has_%sat%s'%(x,y) description:
+main_path = lambda x, y:'BIN_files\\' + 'file_has_%s_at%s'%(x,y)
+# main_path template description:
 # x - string contains group's names of data has been chosed by user.
-# X sting extracted from get_user_data function list.
+# x sting extracted from get_user_data function list.
 # y - data is created from the first bin file's name.
-# Y string is got by function get1st_file_date
+# y string is got by function get1st_file_date
+
+work_path = {'in1': root_main + 'BIN_files\\',
+             'main_fun':main_path}
 
 #===================================================================
-conv_data = {'win32':{'in1':win_root_path +'Converter\\Converter\\BIN_files\\',
-                      'main_fun': lambda x, y:main_path + 'file_has_%s_at%s'%(x,y)},
-             'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
-                       'out1':lin_root_path +'/Converter/CONVERTED_files'}}
+#conv_data = {'win32':{'in1':win_root_path +'Converter\\Converter\\BIN_files\\',
+#                      'main_fun': lambda x, y:main_path + 'file_has_%s_at%s'%(x,y)},
+#             'linux2':{'in1':lin_root_path +'/Converter/BIN_files/',
+#                       'out1':lin_root_path +'/Converter/CONVERTED_files'}}
 
 #===================================================================
 
-# Set path for testing functions
-test_data = {'win32':{'get_first_line':win_root_path +
-                      'Converter\\test\\Converter\\get_first_line\\right_test\\',
-                      'common':win_root_path + 'Converter\\Converter\\BIN_files\\'}}
+#====================== Set path for testing functions =========================
+root_test = 'Converter\\test\\Converter\\'
+test_path = {'get_first_line_r':root_test + 'get_first_line\\right_test\\',
+             'get_first_line_w':root_test + 'get_first_line\\wrong_test\\',
+             'common':root_test + 'BIN_files\\'}
+
+#===============================================================================
+
+# ============== Delete this!!!!!!================
+#test_data = {'win32':{'get_first_line':win_root_path +
+#                      'Converter\\test\\Converter\\get_first_line\\right_test\\',
+#                      'common':win_root_path + 'Converter\\Converter\\BIN_files\\'}}
+#=========================================================
+
 
 # Set format style for output text files
 data_style = {'f_style':'.8f','i_style':'d','l_style':'l','s_style':'s'}
