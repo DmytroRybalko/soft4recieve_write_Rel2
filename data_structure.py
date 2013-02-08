@@ -4,11 +4,10 @@
 The script is purposed for data structure composition from base csv-file.
 """
 import csv
-from soft4recieve_write_Rel2.set_working_path import root_path, base_file
-from soft4recieve_write_Rel2.main_lib import create_path
+from soft4recieve_write_Rel2.set_working_path import base_file
 
 # Import data from core csv file for creating file structure
-base_data = open(create_path(root_path) + base_file,'rb')
+base_data = open( base_file,'rb')
 bd_csv = csv.reader(base_data,delimiter=';')
 
 size_list, shift_list, bin_list = [],[],[]
