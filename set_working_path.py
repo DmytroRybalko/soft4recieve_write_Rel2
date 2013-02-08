@@ -34,10 +34,10 @@ base_file = create_path(root_path) + 'base_data.csv'
 in_path = create_path(root_path) + 'Converter\\Converter\\BIN_files\\'
 
 #========= Set Local pathes to files that are created by functions  ============
-com_path = 'Converter\\Converter\\'
+com_path = create_path(root_path) + 'Converter\\Converter\\'
 # ====== main fucntion=========
 # Local path to file which is created by 'main' function
-main_path = lambda x, y:com_path + 'file_has_%s_at%s'%(x,y)
+main_path = lambda x, y:'file_has_%s_at%s'%(x,y)
 # main_path template description:
 # x - string contains group's names of data has been chosed by user.
 # x sting extracted from get_user_data function list.

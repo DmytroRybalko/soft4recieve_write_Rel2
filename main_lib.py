@@ -135,3 +135,12 @@ def data2file(data,f_name):
         pass
     except:
         "Something wrong with writing in file!"
+
+def user_group_name2str(user_data):
+    """
+    Function combines string of group's names in user_data list.
+    """
+    try:
+        return ''.join(set([name['group'] + '_' for name in user_data]))
+    except:
+        print "Problem in user_group_name2str function!"

@@ -132,15 +132,6 @@ def extract_data(usr_packets,hex_line,sep):
             buf.append(format_data(dec_val,sep))
     return buf
 
-def user_group_name2str(user_data):
-    """
-    Function combines string of group's names in user_data list.
-    """
-    try:
-        return ''.join(set([name['group'] + '_' for name in user_data]))
-    except:
-        print "Problem in user_group_name2str function!"
-
 def line_from_file(file_dict):
     """
     Function extract rows, row's and file's ordering numbers from files of
@@ -162,17 +153,34 @@ def main_fun(file_dict,**funlist):
         for lines in enumerate(open(file_dict[files[1]],'r')):
             pass
 
+
+# Get dictionary of binary files
+sort_file_dict = lambda path:sort_files(glob.glob(path + '*.dat'),'bin')
+# Get date and time from full_name
+date_from_bin_file = lambda f_name:f_name.split('\\')[-1][10:-4]
+
 if __name__ == "__main__":
-    # Create list of files for converting
-    file_list = glob.glob(test_path['common'] + '*.dat')
-    # Create dictionary of binary files for converting
-    file_dict = sort_files(file_list,'bin')
-    # Get first file's name
-    full_name = file_dict[sorted(file_dict)[0]]
-    print "First file's name: \n", full_name
+    # Get dictionary of binary files
+    sfd = sort_file_dict(test_path['common'])
+    # Get full first file's name
+    fff_name = sfd[sorted(sfd)[0]]
+    print fff_name
     # Get date and time from full_name
-    date_from_bin_file = full_name.split('\\')[-1][10:-4]
-    print "Date and time: ", date_from_bin_file
+    print date_from_bin_file(fff_name)
+
+# Create list of files for converting
+#    file_list = glob.glob(test_path['common'] + '*.dat')
+    # Create dictionary of binary files for converting
+#    file_dict = sort_files(file_list,'bin')
+    #    full_name = sort_file_dict[sorted(sort_file_dict)[0]]
+    #    print "First file's name: \n", full_name
+    #    date_from_bin_file = full_name.split('\\')[-1][10:-4]
+    #    print "Date and time: ", date_from_bin_file
+
+
+
+
+
 
 #    for key in sorted(file_dict):
 #        print file_dict[key]
