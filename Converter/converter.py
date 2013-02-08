@@ -9,7 +9,7 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from soft4recieve_write_Rel2.set_working_path import conv_data,test_data
+from soft4recieve_write_Rel2.set_working_path import fun_path, test_path
 from soft4recieve_write_Rel2.main_lib import *
 from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
 from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
@@ -164,7 +164,7 @@ def main_fun(file_dict,**funlist):
 
 if __name__ == "__main__":
     # Create list of files for converting
-    file_list = glob.glob(get_path(test_data)['common'] + '*.dat')
+    file_list = glob.glob(test_path['common'] + '*.dat')
     # Create dictionary of binary files for converting
     file_dict = sort_files(file_list,'bin')
     # Get first file's name
