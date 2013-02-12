@@ -53,7 +53,8 @@ fun_path = {'main_fun':main_path}
 root_test = create_path(root_path) + 'Converter\\test\\Converter\\'
 test_path = {'get_first_line_r':root_test + 'get_first_line\\right_test\\',
              'get_first_line_w':root_test + 'get_first_line\\wrong_test\\',
-             'common':root_test + 'test_BIN_files\\'}
+             'common':root_test + 'test_BIN_files\\',
+             'main_fun':root_test + 'main_fun\\test_files\\'}
 
 #===============================================================================
 

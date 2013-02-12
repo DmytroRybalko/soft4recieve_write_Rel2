@@ -8,7 +8,7 @@ import glob
 from soft4recieve_write_Rel2.main_lib import user_group_name2str
 from soft4recieve_write_Rel2.set_working_path import fun_path, test_path
 from soft4recieve_write_Rel2.Converter.converter import (get_available_data,
-    main_fun, sort_file_dict, date_from_bin_file)
+    main_fun, sort_file_dict, date_from_bin_file, line_from_file)
 
 def test1(x):
     string = '1'
@@ -16,11 +16,11 @@ def test1(x):
 
 def test2(x,y):
     string = '2'
-    return "Give me arg1 %s, agr2 %s" % (x,y)
+    return "Give me arg1 %s, agr2 %s" % (str(x),str(y))
 
 def test3(x,y,z):
     string = '3'
-    return "Give me arg1 %s, arg2 %s, arg3 %s" % (x,y,z)
+    return "Give me arg1 %s, arg2 %s, arg3 %s" % (str(x),str(y),str(z))
 
 def fabric_fun(fun,**kvargs):
     return 'Result of %s '%fun.__name__, fun(kvargs)
@@ -40,27 +40,26 @@ def main2():
 
     vargs -- list of tuples with arguments
     """
-    tup1 = ('1','2','3')
-    tup2 = ('10','20','30')
-    tup3 = ('100','200','300')
-    for a, b, c in zip(tup1,tup2,tup3):
-        func_args = {'test1':a,'test2':(b,c),'test3':(c,b,a)}
+    # Get dictionary of binary files
+    sfd = sort_file_dict(test_path['main_fun'])
+    for f, r, l in line_from_file(sfd):#read data from files
+        func_args = {'test1':(f,),'test2':(f,r),'test3':(f,r,l)}
         for fun, arg in zip(func_pool,func_args):
-            print '%s, I am %s'%(fun(*func_args[fun.__name__]), fun.__name__)
+            print 'I am %s'%fun.__name__
+            print fun(*func_args[fun.__name__]),'\n'
 
 if __name__ == "__main__":
     print 'Test main1 func\n=================='
-#    print '==================\n'
     # Create pool of functions
     func_pool = (test1,test2,test3)
     # Create dict that connects function's name and tuple of arguments
     func_args = {'test1':'a','test2':('b','c'),'test3':('b','a','c')}
     main1(func_pool,func_args)
     print '==================\n'
+
     print 'Test main2 func\n=================='
     main2()
     print '==================\n'
-
 
     # Get dictionary of binary files
     sfd = sort_file_dict(test_path['common'])
@@ -75,13 +74,11 @@ if __name__ == "__main__":
     path = local_path(group_data,date_from_bin_file(fff_name))
 
 
-    for fun, arg in zip(func_pool,func_args):
-        print fun(*func_args[fun.__name__])
 
     print "=================================================="
 #    print (test3.__code__.co_varnames)
 #    print 'Attribute test'
-    test1('3')
+#    test1('3')
 #    print  dir(test1)
 #    test1.my_file_name = 'test.dat'
 #    test1.__setattr__('my_file_name','test\\test.dat')
