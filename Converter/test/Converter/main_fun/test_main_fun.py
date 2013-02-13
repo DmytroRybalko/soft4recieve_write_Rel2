@@ -63,6 +63,26 @@ def main3(func_pool,arg):
             print 'I am %s'%fun.__name__
             print fun(**arg),'\n'
 
+def main4(sfd,func_pool,arg):
+    """
+    This function write data produced by servise functions in theis own files.
+
+    sfd -- dictionary of sorted files for reading
+    """
+    # Set path for files produced by test functions
+    test1 = test_path['main_fun'] + 'test1.dat'
+    for arg['arg1'], arg['arg2'], arg['arg3'] in line_from_file(sfd):#read data from files
+        for fun in (test6,):
+            try:
+                fun.__getattr__('file')
+            except:
+                f_test1 = open('test1.dat','w')
+                f_test1.write('This is head of %s'%fun.__name__)
+                f_test1.close()
+#                print 'I am %s'%fun.__name__
+#                print fun.__getattribute__('func_name')
+    print 'Done!'
+
 if __name__ == "__main__":
     print 'Test main1 func\n=================='
     # Create pool of functions
@@ -79,7 +99,13 @@ if __name__ == "__main__":
     func_pool2 = (test4,test5,test6)
 #    kargs = {'arg1':'1','arg2':'2','arg3':'3'}
     kargs = {'arg1':None,'arg2':None,'arg3':None}
-    main3(func_pool2,kargs)
+#    main3(func_pool2,kargs)
+    print '==================\n'
+    print 'Test main4 func\n=================='
+    # Get path to test files
+    sfd = sort_file_dict(test_path['main_fun'])
+
+    main4(sfd,func_pool2,kargs)
     print '==================\n'
 
     # Get dictionary of binary files
