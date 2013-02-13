@@ -74,14 +74,23 @@ def main4(sfd,func_pool,arg):
     for arg['arg1'], arg['arg2'], arg['arg3'] in line_from_file(sfd):#read data from files
         for fun in (test6,):
             try:
-                fun.__getattr__('file')
+                # Create file's object from function's attribute that stores path to writing file
+                func_file = open(fun.my_file,'a')
+                func_file.write(fun(**arg)+'')
+                func_file.close()
             except:
-                f_test1 = open('test1.dat','w')
-                f_test1.write('This is head of %s'%fun.__name__)
+                # Create file, write head string and first line
+                f_test1 = open(fun.__name__ + '.dat','w')
+                f_test1.write('This is head of %s\n\n'%fun.__name__)
+                f_test1.write(fun(**arg)+'')
                 f_test1.close()
+                # Attach file's name as function attribute
+                fun.__setattr__('my_file' ,fun.__name__ + '.dat')
+
 #                print 'I am %s'%fun.__name__
-#                print fun.__getattribute__('func_name')
-    print 'Done!'
+#    print fun.__getattribute__('my_file')
+#    print 'Func got attribute', fun.my_file
+#    print dir(fun)
 
 if __name__ == "__main__":
     print 'Test main1 func\n=================='
@@ -104,7 +113,6 @@ if __name__ == "__main__":
     print 'Test main4 func\n=================='
     # Get path to test files
     sfd = sort_file_dict(test_path['main_fun'])
-
     main4(sfd,func_pool2,kargs)
     print '==================\n'
 
