@@ -13,26 +13,20 @@ from soft4recieve_write_Rel2.Converter.converter import (get_available_data,
 def test1(x):
     return "Give me arg1 %s" % str(x)
 
-def test4(**args):
-    return "Give me arg1 %s" % args['arg1']
-
 def test2(x,y):
     return "Give me arg1 %s, agr2 %s" % (str(x),str(y))
-
-def test5(**args):
-    return "Give me arg1 %s, agr2 %s" % (args['arg1'],args['arg2'])
 
 def test3(x,y,z):
     return "Give me arg1 %s, arg2 %s, arg3 %s" % (str(x),str(y),str(z))
 
+def test4(**args):
+    return "Give me arg1 %s" % args['arg1']
+
+def test5(**args):
+    return "Give me arg1 %s, agr2 %s" % (args['arg1'],args['arg2'])
+
 def test6(**args):
     return "Give me arg1 %s, arg2 %s, arg3 %s" % (args['arg1'],args['arg2'],args['arg3'])
-
-def test4(**kargs):
-    print "Give me arg1 %s, arg2 %s, arg3 %s" % (kargs['arg1'],kargs['arg2'],kargs['arg3'])
-
-def fabric_fun(fun,**kvargs):
-    return 'Result of %s '%fun.__name__, fun(kvargs)
 
 def main1(func_pool,func_args):
     """
@@ -57,13 +51,17 @@ def main2():
             print 'I am %s'%fun.__name__
             print fun(*func_args[fun.__name__]),'\n'
 
-def main3(func_pool,args):
+def main3(func_pool,arg):
     """
-
+    This function extract data from list of files, number of files and number
+    of lines in file and pass theirs as arguments to pool of function.
     """
-    for fun in func_pool:
-        print 'I am %s'%fun.__name__
-        print fun(**args),'\n'
+    # Get dictionary of binary files
+    sfd = sort_file_dict(test_path['main_fun'])
+    for arg['arg1'], arg['arg2'], arg['arg3'] in line_from_file(sfd):#read data from files
+        for fun in func_pool:
+            print 'I am %s'%fun.__name__
+            print fun(**arg),'\n'
 
 if __name__ == "__main__":
     print 'Test main1 func\n=================='
@@ -73,20 +71,16 @@ if __name__ == "__main__":
     func_args = {'test1':'a','test2':('b','c'),'test3':('b','a','c')}
 #    main1(func_pool,func_args)
     print '==================\n'
-
     print 'Test main2 func\n=================='
 #    main2()
     print '==================\n'
-
+    print 'Test main3 func\n=================='
     # Create dict of named arguments
     func_pool2 = (test4,test5,test6)
-    kargs = {'arg1':'1','arg2':'2','arg3':'3'}
-    print test4(**kargs)
-    for fun in func_pool2:
-        print 'I am %s'%fun.__name__
-        print fun(**kargs),'\n'
-#    main3(func_pool,kargs)
-
+#    kargs = {'arg1':'1','arg2':'2','arg3':'3'}
+    kargs = {'arg1':None,'arg2':None,'arg3':None}
+    main3(func_pool2,kargs)
+    print '==================\n'
 
     # Get dictionary of binary files
     sfd = sort_file_dict(test_path['common'])
