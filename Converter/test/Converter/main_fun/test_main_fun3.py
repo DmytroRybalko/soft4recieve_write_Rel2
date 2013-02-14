@@ -20,36 +20,18 @@ def test6(**args):
     return "Give me arg1 %s, arg2 %s, arg3 %s" % (args['arg1'],args['arg2'],args['arg3'])
 
 
-def main4(sfd,func_pool,arg):
+def main4(sfd,func_pool,arg,file_path='.dat'):
     """
     This function write data produced by servise function in its own file.
 
-    sfd -- dictionary of sorted files for reading
-    """
-    for arg['arg1'], arg['arg2'], arg['arg3'] in line_from_file(sfd):#read data from files
-        for fun in (test4,):
-            try:
-                # Create file's object from function's attribute that stores path to writing file
-                func_file = open(fun.my_file,'a')
-                func_file.write(fun(**arg)+'')
-                func_file.close()
-            except:
-                # Create file, write head string and first line
-                f_test1 = open(fun.__name__ + '.dat','w')
-                f_test1.write('This is head of %s\n\n'%fun.__name__)
-                f_test1.write(fun(**arg)+'')
-                f_test1.close()
-                # Attach file's name as function attribute
-                fun.__setattr__('my_file' ,fun.__name__ + '.dat')
-
-def main5(sfd,func_pool,arg):
-    """
-    This function write data produced by servise functions in theis own files.
+    TODO: describe all tests as documentation for further displaying.For example
+    This func:
+    1 ....do something...............
+    2 ....do something...............
+    ...................
 
     sfd -- dictionary of sorted files for reading
     """
-    # Set path for files produced by test functions
-    test1 = test_path['main_fun'] + 'test1.dat'
     for arg['arg1'], arg['arg2'], arg['arg3'] in line_from_file(sfd):#read data from files
         for fun in func_pool:
             try:
@@ -64,32 +46,20 @@ def main5(sfd,func_pool,arg):
                 f_test1.write(fun(**arg)+'')
                 f_test1.close()
                 # Attach file's name as function attribute
-                fun.__setattr__('my_file' ,fun.__name__ + '.dat')
+                fun.__setattr__('my_file' ,fun.__name__ + file_path)
+    print 'File name is %s'%fun.my_file
 
 if __name__ == "__main__":
-    print 'Test main3 func\n=================='
-    # Create dict of named arguments
-    func_pool2 = (test4,test5,test6)
-#    kargs = {'arg1':'1','arg2':'2','arg3':'3'}
-    kargs = {'arg1':None,'arg2':None,'arg3':None}
-#    main3(func_pool2,kargs)
-    print '==================\n'
-    print 'Test main4 func\n=================='
     # Get path to test files
     sfd = sort_file_dict(test_path['main_fun'])
-    main5(sfd,func_pool2,kargs)
+    # Create dict of named arguments
+    func_pool = (test4,test5,test6)
+    kargs = {'arg1':None,'arg2':None,'arg3':None}
+    print 'Test main3 func\n=================='
+    print 'Main3 function calls one function that creates its file and write data in it.\n'
+    main4(sfd,(test6,),kargs)
     print '==================\n'
-
-    print "=================================================="
-#    print (test3.__code__.co_varnames)
-#    print 'Attribute test'
-#    test1('3')
-#    print  dir(test1)
-#    print test1.__dict __
-#    help(test1.func_dict)
-#    test1.my_file_name = 'test.dat'
-#    test1.__setattr__('my_file_name','test\\test.dat')
-#    print dir(test1)
-#    print test1.my_file_name
+    print 'Main function calls pool of functions each of which creates its file and write data in it.\n'
+    main4(sfd,func_pool,kargs)
 
 

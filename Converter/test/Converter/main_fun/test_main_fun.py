@@ -72,7 +72,7 @@ if __name__ == "__main__":
     kargs = {'arg1':None,'arg2':None,'arg3':None}
 #    main3(func_pool2,kargs)
     print '==================\n'
-    
+
     # Get dictionary of binary files
     sfd = sort_file_dict(test_path['common'])
     # Get full first file's name
