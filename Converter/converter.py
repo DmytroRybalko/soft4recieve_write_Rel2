@@ -9,7 +9,7 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from soft4recieve_write_Rel2.set_working_path import fun_path, test_path
+from soft4recieve_write_Rel2.set_working_path import in_path, fun_path, test_path
 from soft4recieve_write_Rel2.main_lib import *
 from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
 from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
@@ -79,7 +79,9 @@ def get_user_data(in_data):
     """
     user_data = raw_input('Input list of values for converting: ')
     try:
-        buf = []
+        # Initialasing of buffer by adding order numbers of KKP's second and count
+        name = lambda name:[p for p in in_data if p['cut_name'] == name]
+        buf = name('Sec') + name('Count')
         user_in = map(int,user_data.split(','))
         if set(user_in).issubset(set(range(len(in_data)))):
             for item in enumerate(in_data):
@@ -141,18 +143,39 @@ def line_from_file(file_dict):
         for lines in enumerate(open(file_dict[files[1]],'r')):
             yield (files[1],lines[0],lines[1])
 
-def main_fun(file_dict,**funlist):
+def main_fun(path):
     """
     Function extract data from bin files according to user_data structure.
 
     Keyword arguments:
     user_data - list of dictionaries of available data for extracting.
     """
+    a = get_first_line(path)
+    b = get_available_data(a)
+    pass
 
-    for files in enumerate(sorted(file_dict)):# Open binary files for reading
-        for lines in enumerate(open(file_dict[files[1]],'r')):
-            pass
+def name4main_file(path=in_path,**args):
+    """
+    Function creates name for main file from tamplate, groups's name
+    which are in binary file and data creation of binary file.
 
+    Keyword arguments:
+    path -- path to incoming bin-files (sets in set_working_path)
+    args --
+    """
+    # Get dictionary of binary files
+    sfd = sort_file_dict(path)
+    # Get date and time from first binary file's name
+    date_time = sfd[min(sfd)].split('\\')[-1][10:-4]
+    # Create file name
+    name = user_group_name2str(args['user_data'])
+    return args['fun_path']['main_fun'](name,date_time)
+
+def interface():
+    """
+    Function composites dictionary of named argument for
+    """
+    pass
 
 # Get dictionary of binary files
 sort_file_dict = lambda path:sort_files(glob.glob(path + '*.dat'),'bin')
@@ -162,6 +185,7 @@ date_from_bin_file = lambda f_name:f_name.split('\\')[-1][10:-4]
 if __name__ == "__main__":
     # Get dictionary of binary files
     sfd = sort_file_dict(test_path['common'])
+    print sfd[min(sfd)]
     # Get full first file's name
     fff_name = sfd[sorted(sfd)[0]]
     print fff_name
@@ -176,11 +200,6 @@ if __name__ == "__main__":
     #    print "First file's name: \n", full_name
     #    date_from_bin_file = full_name.split('\\')[-1][10:-4]
     #    print "Date and time: ", date_from_bin_file
-
-
-
-
-
 
 #    for key in sorted(file_dict):
 #        print file_dict[key]

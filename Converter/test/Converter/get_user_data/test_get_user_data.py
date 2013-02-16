@@ -11,8 +11,6 @@ from soft4recieve_write_Rel2.Converter.converter import show_available_data
 from soft4recieve_write_Rel2.Converter.converter import get_user_data
 
 if __name__ == "__main__":
-    # Create list of files for converting
-#    file_list = glob.glob(get_path(test_data)['common'] + '*.dat')
     # Create dictionary of binary files for converting
     file_dict = sort_file_dict(test_path['common'])
     # Get list of available data
@@ -20,6 +18,11 @@ if __name__ == "__main__":
     # Show list of available data
     show_available_data(new_packets)
     print 'new_packets: ', len(new_packets)
+#    print type(new_packets)
+#    print new_packets[0:2]
+#    name = lambda name:([p for p in new_packets if p['cut_name'] == name])
+#    buf = name('Sec') + name('Count')
+#    print 'buf = ',buf
     result = get_user_data(new_packets)
     print 'len: ', len(result)
     for i in result:
