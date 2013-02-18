@@ -5,13 +5,9 @@ This file contains unittests for converter.py.
 """
 import unittest
 import glob
-from soft4recieve_write_Rel2.set_working_path import base_file, fun_path, test_path
-from soft4recieve_write_Rel2.main_lib import sort_files
+from soft4recieve_write_Rel2.set_working_path import base_file, fun_path, test_path, in_path
 from soft4recieve_write_Rel2.Converter.converter import get_available_data
-from soft4recieve_write_Rel2.Converter.converter import show_available_data
-from soft4recieve_write_Rel2.Converter.converter import get_user_data
 from soft4recieve_write_Rel2.Converter.converter import sort_file_dict, date_from_bin_file
-
 
 def test1():
     print 'base_file: \n', base_file, '\n'
@@ -42,6 +38,5 @@ def test_main_fun_path():
     print 'main_fun path file: \n', path, '\n'
 
 if __name__ == "__main__":
-
     test1()
     test_main_fun_path()

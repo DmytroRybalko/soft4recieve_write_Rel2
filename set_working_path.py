@@ -17,6 +17,16 @@ def create_path(os_dict):
         if sys.platform.startswith(os_key):
             return os_dict[os_key]
 
+def change_path(path):
+    """
+    Function insert slash (/) or backslash (\) in path depending on current OS.
+    """
+    if sys.platform.startswith('win32') and path.split('/') > 1:
+        return path.replace('/','\\')
+    elif sys.platform.startswith('linux2') and path.split('\\') > 1:
+        return path.replace('\\','/')
+
+cp = change_path
 # ============= Set root path to files =========================================
 
 win_root_path = 'd:\\Programming\\Python_Projects\\soft4recieve_write_Rel2\\'
@@ -31,10 +41,10 @@ base_file = create_path(root_path) + 'base_data.csv'
 
 # =================== Set path for incoming bin-files ==========================
 
-in_path = create_path(root_path) + 'Converter\\Converter\\BIN_files\\'
+in_path = create_path(root_path) + cp('Converter\\BIN_files\\')
 
 #========= Set Local pathes to files that are created by functions  ============
-com_path = create_path(root_path) + 'Converter\\Converter\\'
+com_path = create_path(root_path) + cp('Converter\\Converter\\')
 # ====== main fucntion=========
 # Local path to file which is created by 'main' function
 main_path = lambda x, y:'file_has_%s_at%s'%(x,y)
@@ -50,11 +60,11 @@ fun_path = {'main_fun':main_path}
 
 #====================== Set path for testing functions =========================
 
-root_test = create_path(root_path) + 'Converter\\test\\Converter\\'
-test_path = {'get_first_line_r':root_test + 'get_first_line\\right_test\\',
-             'get_first_line_w':root_test + 'get_first_line\\wrong_test\\',
-             'common':root_test + 'test_BIN_files\\',
-             'main_fun':root_test + 'main_fun\\test_files\\'}
+root_test = create_path(root_path) + cp('Converter\\test\\Converter\\')
+test_path = {'get_first_line_r':root_test + cp('get_first_line\\right_test\\'),
+             'get_first_line_w':root_test + cp('get_first_line\\wrong_test\\'),
+             'common':root_test + cp('test_BIN_files\\'),
+             'main_fun':root_test + cp('main_fun\\test_files\\')}
 
 #===============================================================================
 
