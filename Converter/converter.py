@@ -49,14 +49,22 @@ def get_available_data(file_dict):
     converting.
     """
     first_line = get_first_line(file_dict)
-    buf = []
-    # Choose the source groups which don't contain symbol '#'(23)
+    buf, new_pack, buf1 = [], [], []
+    group_buf = packets[0]['group']
     for p in packets:
         p['bin'] = first_line[p['shift']*2:p['shift']*2 + p['size']*2]
-        if ''.join(p['bin'].split('23')) != '':
-            if p['cut_name']:# add only 'main' packets
-                buf.append(p)
-    return (buf)
+        buf.append(p) # accumulate data for one group
+        if group_buf != p['group']: # detecting groups changing
+            group_buf = p['group']
+            buf1.append(buf.pop(-1))# last packet in buf is belonged to next group. moves it to buf1
+            sub_line = ''.join([i['bin'] for i in buf])
+            if len(''.join(sub_line.split('23'))): # Choose the source groups which
+                new_pack += [p for p in buf if p['cut_name']] # don't contain symbol '#'(23)
+                buf = buf1
+            else:
+                buf = buf1
+            buf1 = []
+    return new_pack + buf
 
 def show_available_data(in_data):
     """
