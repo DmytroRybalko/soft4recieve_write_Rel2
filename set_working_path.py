@@ -51,12 +51,29 @@ main_path = lambda x, y:'file_has_%s_at%s'%(x,y)
 # main_path template description:
 # x - string contains group's names of data has been chosed by user.
 # x sting extracted from get_user_data function list.
-# y - data is created from the first bin file's name.
+# y - date that is created from the first bin file's name.
 # y string is got by function get1st_file_date
 
-# ============== Local pathes to files that are created by functions  ==========
+# ======== Check data functions ================
 
-fun_path = {'main_fun':main_path}
+# Local path to files which are created by kkp_check_data, sns_check_data and
+# kns_check_data functions accordingly
+kkp_check_path = lambda f_data:'check_kkp_data_in_bin_%s'%(f_data)
+sns_check_path = lambda f_data:'check_sns_data_in_bin_%s'%(f_data)
+kns_check_path = lambda f_data:'check_kns_data_in_bin_%s'%(f_data)
+# path template description:
+# x - date that is created from the first bin file's name.
+
+
+# ===============================================================
+# This structure contains names of services functions which
+# mapping data of binary files and paths of files which these functions
+# create.
+
+func_pool = {'main_fun':{'func':'extract_data', 'path': main_path},
+             'IMU':{'func':'kkp_check_data', 'path': kkp_check_path},
+             'SNS':{'func': 'sns_check_data', 'path': sns_check_path},
+             'KNS':{'func': 'kns_check_data', 'path': kns_check_path}}
 
 #====================== Set path for testing functions =========================
 
