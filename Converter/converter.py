@@ -9,7 +9,7 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from soft4recieve_write_Rel2.set_working_path import in_path, fun_path, test_path
+from soft4recieve_write_Rel2.set_working_path import in_path, test_path, func_pool
 from soft4recieve_write_Rel2.main_lib import *
 from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
 from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
@@ -185,6 +185,17 @@ def interface():
     Function composites dictionary of named argument for
     """
     pass
+
+def edit_func_pool(avail_data):
+    """
+    Function create copy of func_pool structure from set_working_file and replace
+    inside it names of source groups which are not in avail_data.
+    """
+    # Get names of source groups
+    groups_name = set([i['group'] for i in avail_data if i.has_key('group')])
+    return groups_name
+#    for i in result:
+#        print i['cut_name']
 
 # Get dictionary of binary files
 sort_file_dict = lambda path:sort_files(glob.glob(path + '*.dat'),'bin')
