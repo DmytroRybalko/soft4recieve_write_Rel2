@@ -9,7 +9,7 @@ which data he or she can convert. Converted data save into text file.
 import glob
 import struct
 from operator import add
-from soft4recieve_write_Rel2.set_working_path import in_path, test_path, func_pool
+from soft4recieve_write_Rel2.set_working_path import in_path, test_path
 from soft4recieve_write_Rel2.main_lib import *
 from soft4recieve_write_Rel2.moSINS.lib4kkp.lib4kkp import extract_kkp_frame_cell
 from soft4recieve_write_Rel2.moSINS.lib4sns.lib4sns import extract_sns_time
@@ -191,11 +191,20 @@ def edit_func_pool(avail_data):
     Function create copy of func_pool structure from set_working_file and replace
     inside it names of source groups which are not in avail_data.
     """
+    from soft4recieve_write_Rel2.Converter.mapping_functions import func_pool
     # Get names of source groups
-    groups_name = set([i['group'] for i in avail_data if i.has_key('group')])
-    return groups_name
-#    for i in result:
-#        print i['cut_name']
+    groups_name = set([i['group'].split('_')[0] for i in avail_data if i.has_key('group')])
+    nfp = copy.deepcopy(func_pool)
+    # Get list of group's key from nfp
+    for key, val in nfp.items():
+        if val.has_key('group'):
+            if val['group'] not in groups_name:
+                nfp.pop(key)
+            elif val.has_key('quest'):
+                if raw_input(val['quest']) == 'n':
+                    nfp.pop(key)
+    print groups_name
+    return nfp
 
 # Get dictionary of binary files
 sort_file_dict = lambda path:sort_files(glob.glob(path + '*.dat'),'bin')
