@@ -44,7 +44,7 @@ base_file = create_path(root_path) + 'base_data.csv'
 in_path = create_path(root_path) + cp('Converter\\BIN_files\\')
 
 #========= Set Local pathes to files that are created by functions  ============
-com_path = create_path(root_path) + cp('Converter\\Converter\\')
+com_path = create_path(root_path) + cp('Converter\\CONVERTED_files\\')
 
 #====================== Set path for testing functions =========================
 
