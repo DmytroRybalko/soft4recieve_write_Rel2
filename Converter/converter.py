@@ -141,20 +141,20 @@ def main_fun(sfd,nfp,**args):
     user_data - list of dictionaries of available data for extracting.
     """
     for args['file'], args['row'], args['line'] in line_from_file(sfd):#read data from files
-        for func in nfp.values():
+        for func, data in nfp.items():
             try:
                 # Create file's object from function's attribute that stores path to writing file
-                func_file = open(func['path']%args.my_file,'a')
-                func_file.write(func['func'](**args))
+                func_file = open(data['path']%args.my_file,'a')
+                func_file.write(func(**args))
                 func_file.close()
             except AttributeError:
                 # Create file, write head string and first line
-                func_file = open(func['path']%args,'w')
-                func_file.write('This is head of %s\n\n'%func['func'].__name__)
-                func_file.write(func['func'](**args))
+                func_file = open(data['path']%args,'w')
+                func_file.write('This is head of %s\n\n'%func.__name__)
+                func_file.write(func(**args))
                 func_file.close()
                 # Attach file's name as function attribute
-                func['func'].__setattr__('my_file' ,func['func'].__name__ + func['path'])
+                func.__setattr__('my_file' ,func.__name__ + data['path'])
 
 def edit_func_pool(avail_data):
     """

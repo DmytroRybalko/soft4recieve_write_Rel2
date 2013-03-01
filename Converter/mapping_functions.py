@@ -29,23 +29,24 @@ def check_kns_data(**args):
     """
     return args['group_name']
 
+# Set dictionary of arguments for mapping functions
 glob_args = {'row':None,'file':None,'line':None,'group_name':None,'file_date':None,
              '1st_f_name':None}
+
 # Set structure contains names of services functions which
 # mapping data of binary files and paths of files which these functions
 # create.
 
-func_pool = {'func1':{'func':extract_data,
-                      'path': com_path +'file_has_%(group_name)s_at%(file_date)s.dat'},
-             'func2':{'func':check_kkp_data, 'group':'IMU',
-                      'quest':'Does check kkp data? (y/n): ',
-                      'path':com_path +'kkp_check_from_%(1st_f_name)s.dat'},
-             'func3':{'func':check_sns_data, 'group':'SNS',
-                      'quest':'Does check sns data? (y/n): ',
-                      'path':com_path +'sns_check_from_%(1st_f_name)s.dat'},
-             'func4':{'func':check_kns_data, 'group':'KNS',
-                      'quest':'Does check kns data? (y/n): ',
-                      'path':com_path +'kns_check_from_%(1st_f_name)s.dat'}}
+func_pool = {extract_data:{'path': com_path +'file_has_%(group_name)s_at%(file_date)s.dat'},
+             check_kkp_data:{'group':'IMU',
+                             'quest':'Does check kkp data? (y/n): ',
+                             'path':com_path +'kkp_check_from_%(1st_f_name)s.dat'},
+             check_sns_data:{'group':'SNS',
+                             'quest':'Does check sns data? (y/n): ',
+                             'path':com_path +'sns_check_from_%(1st_f_name)s.dat'},
+             check_kns_data:{'group':'KNS',
+                             'quest':'Does check kns data? (y/n): ',
+                             'path':com_path +'kns_check_from_%(1st_f_name)s.dat'}}
 
 if __name__ == "__main__":
     dic = {}
@@ -53,13 +54,13 @@ if __name__ == "__main__":
     dic['file_date'] = '02-02-2013_10-14'
     dic['1st_f_name'] = 'binMoSINS_02-02-2013_10-14'
     # Test path from func_pool
-    template = func_pool['func1']
+    template = func_pool[extract_data]
     path = template['path'] % dic
 #    print path
-    for func in func_pool.values():
-#        print func['func'].__name__
-#        print func['func'](**dic)
-        print func['path'] % dic
+    for func, data in func_pool.items():
+        print func.__name__
+        print data['path'] % dic
+#        print func['path'] % dic
 
     uc = {1:'Does check kns data? (y/n): ',
           2:'Does check kkp data? (y/n): ',
