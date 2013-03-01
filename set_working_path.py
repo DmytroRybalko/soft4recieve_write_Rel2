@@ -52,7 +52,8 @@ root_test = create_path(root_path) + cp('Converter\\test\\Converter\\')
 test_path = {'get_first_line_r':root_test + cp('get_first_line\\right_test\\'),
              'get_first_line_w':root_test + cp('get_first_line\\wrong_test\\'),
              'common':root_test + cp('test_BIN_files\\'),
-             'main_fun':root_test + cp('main_fun\\test_files\\')}
+             'main_fun':root_test + cp('main_fun\\test_files\\'),
+             'line_from_file':root_test + cp('line_from_file\\')}
 
 #===============================================================================
 

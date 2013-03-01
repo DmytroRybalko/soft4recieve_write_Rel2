@@ -131,35 +131,30 @@ def line_from_file(file_dict):
     """
     for files in enumerate(sorted(file_dict)):# Open binary files for reading
         for lines in enumerate(open(file_dict[files[1]],'r')):
-            yield (files[1],lines[0],lines[1])
+            yield (files[0],lines[0],lines[1])
 
-def main_fun(sfd,**args):
+def main_fun(sfd,nfp,**args):
     """
     Function extract data from bin files according to user_data structure.
 
     Keyword arguments:
     user_data - list of dictionaries of available data for extracting.
     """
-    # Edit func_pool depending on user_data
-    nfp = edit_func_pool(args['user_data'])
-#    template = func_pool['func1']
-#    path = template['path'] % dic
-    # Main loop
-#    for args['file'], args['row'], args['line'] in line_from_file(sfd):#read data from files
-    for func in nfp.values():
-        try:
-            # Create file's object from function's attribute that stores path to writing file
-            func_file = open(func['path']%args.my_file,'a')
-            func_file.write(func['func'](**args))
-            func_file.close()
-        except AttributeError:
-            # Create file, write head string and first line
-            func_file = open(func['path']%args,'w')
-            func_file.write('This is head of %s\n\n'%func['func'].__name__)
-            func_file.write(func['func'](**args))
-            func_file.close()
-            # Attach file's name as function attribute
-            func['func'].__setattr__('my_file' ,func['func'].__name__ + func['path'])
+    for args['file'], args['row'], args['line'] in line_from_file(sfd):#read data from files
+        for func in nfp.values():
+            try:
+                # Create file's object from function's attribute that stores path to writing file
+                func_file = open(func['path']%args.my_file,'a')
+                func_file.write(func['func'](**args))
+                func_file.close()
+            except AttributeError:
+                # Create file, write head string and first line
+                func_file = open(func['path']%args,'w')
+                func_file.write('This is head of %s\n\n'%func['func'].__name__)
+                func_file.write(func['func'](**args))
+                func_file.close()
+                # Attach file's name as function attribute
+                func['func'].__setattr__('my_file' ,func['func'].__name__ + func['path'])
 
 def edit_func_pool(avail_data):
     """
@@ -197,21 +192,16 @@ if __name__ == "__main__":
     show_available_data(new_packets)
     # Get user data
     user_data = get_user_data(new_packets)
+    # Edit func_pool depending on user_data
+    new_fp = edit_func_pool(user_data)
     # ====== Initial keys for glob_args =======
-#    print sfd[min(sfd)]
-    # Get full first file's name
-#    print args['1st_f_name']
-#    fff_name = sfd[min(sfd)]
-#    print 'full first file name: ', fff_name
-    # Get short file name
+    # Set short file name
     args['1st_f_name'] = sfd[min(sfd)][-30:-4]
-    print 'short file name: ', args['1st_f_name']
-    # Get date and time from full_name
-    print args['file_date']
+    # Set date and time from full_name
     args['file_date'] = date_from_bin_file(args['1st_f_name'])
-    print 'date and time from short file name', args['file_date']
-    # Get names of data groups
+    # Set names of data groups
     args['group_name'] = user_group_name2str(user_data)
+    # Set user_data as argument
     args['user_data'] = user_data
     # Call main_fun function
-    main_fun(sfd,**args)
+    main_fun(sfd,new_fp,**args)
